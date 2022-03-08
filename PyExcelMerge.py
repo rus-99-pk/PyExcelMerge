@@ -6,7 +6,7 @@ import openpyxl as xl
 system('clear')
 
 # Создание переменных
-program_name = 'excel custom consolidation'
+program_name = 'python excel merge'
 
 # Создание списков
 user_cols = []
@@ -71,14 +71,12 @@ print_program_name(program_name)
 tables = []
 for circle in range(1,3):
     table = {}
-
     # Присваивание файла переменной
     active_sheet = get_excel_file()
-
     # Функция создания словаря
     table = create_dictionary(active_sheet)
     tables.append(table)
-
+    
 cir = 1
 new_table = {}
 circle = 0
@@ -110,26 +108,24 @@ for key_one, row_one in tables[1].items():
                 cir += 1
 table = new_table
 
+# Объединение ключей и значений
+#  таблицы в список записей.
 table_rows = []
-
-# 
 for key, values in table.items():
     values.insert(0, key)
     table_rows.append(values)
 
+# Создание новой талицы
 new_file = xl.Workbook()
+# Задание названия первого листа
 new_file.create_sheet(title = 'Сортировка', index = 0)
 active_sheet = new_file['Сортировка']
 
+# Вывод записей в таблицу
 for table_row in table_rows:
     active_sheet.append(table_row)
 
+# Сохранение нового файла
 new_file.save('Отсортированная таблица.xlsx')
+
 print ('Работа программы завершена.')
-    
-
-
-
-
-
-            
